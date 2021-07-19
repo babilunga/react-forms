@@ -1,46 +1,7 @@
-* {
-	/* border: 1px solid; */
-}
-body {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	font-size: 24px;
-	font-family: sans-serif;
-}
 .form-container {
-	width: fit-content;
-	height: fit-content;
-	margin: 100px auto;
-}
-.form {
-	width: 50vw;
-	height: 400px;
-	padding: 20px;
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: space-evenly;
-	box-shadow: 0 0 5px rgb(136, 136, 136);
-}
-.form-group {
-	height: 20%;
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: space-around;
-	align-content: flex-start;
-}
-.form-control {
-	padding: 10px;
-}
-.btn {
-	font-size: 20px;
-	padding: 15px 0;
-	border: 0 solid;
-	border-radius: 5px;
-	background-color: rgb(0, 90, 255);
-	color: white;
-}
-.btn:hover {
-	cursor: pointer;
-	background-color: rgb(0, 84, 240);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 460px;
 }
