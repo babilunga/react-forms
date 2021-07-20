@@ -1,7 +1,8 @@
 import React from 'react';
+// import Verificators from './Verificators.js';
+import countries from './data/countries.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
-import classnames from 'classnames';
 
 export default class App extends React.Component {
   constructor() {
@@ -10,6 +11,7 @@ export default class App extends React.Component {
       username: '',
       password: '',
       repeatPassword: '',
+      country: '',
     };
   }
 
@@ -22,9 +24,18 @@ export default class App extends React.Component {
   };
 
   onChangeInput = (event) => {
+    console.log(`${event.target.name}: ${event.target.value}`);
     this.setState({
       [event.target.name]: event.target.value,
     });
+  };
+
+  getOptionItems = (items) => {
+    return items.map((item) => (
+      <option key={item.id} value={item.id}>
+        {item.name}
+      </option>
+    ));
   };
 
   render() {
@@ -65,42 +76,25 @@ export default class App extends React.Component {
               onChange={this.onChangeInput}
             />
           </div>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span>
-                Your user name is: <strong>{this.state.username}</strong>
-              </span>
-            </li>
-            <li className="list-group-item">
-              <div className="row justify-content-around">
-                <div
-                  className={classnames(
-                    'alert alert-secondary p-2 small col-5',
-                    {
-                      'alert-success': this.state.password.length > 4,
-                      'text-muted': this.state.password.length <= 4,
-                    }
-                  )}
-                >
-                  {'password length > 4'}
-                </div>
-                <div
-                  className={classnames(
-                    'alert alert-secondary p-2 small col-5',
-                    {
-                      'alert-success':
-                        this.state.password === this.state.repeatPassword &&
-                        this.state.password !== '',
-                      'text-muted':
-                        this.state.password !== this.state.repeatPassword,
-                    }
-                  )}
-                >
-                  repeated password
-                </div>
-              </div>
-            </li>
-          </ul>
+          <div className="form-group mb-3">
+            <label htmlFor="countrySelect">Choose country</label>
+            <select
+              className="form-select"
+              id="countrySelect"
+              name="country"
+              value={this.state.country}
+              onChange={this.onChangeInput}
+            >
+              {this.getOptionItems(countries)}
+            </select>
+          </div>
+
+          {/* <Verificators
+            username={this.state.username}
+            password={this.state.password}
+            repeatPassword={this.state.repeatPassword}
+          /> */}
+
           <button
             type="submit"
             className="btn btn-primary btn-block w-100 mt-2"
