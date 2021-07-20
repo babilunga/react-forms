@@ -12,13 +12,14 @@ export default class App extends React.Component {
       password: '',
       repeatPassword: '',
       country: '',
+      gender: 'male',
     };
   }
 
   onSubmit = (event) => {
     event.preventDefault();
     console.log(
-      `username: ${this.state.username},\npassword: ${this.state.password},\nrepeat password: ${this.state.repeatPassword}`
+      `username: ${this.state.username},\npassword: ${this.state.password},\nrepeat password: ${this.state.repeatPassword}\ncountry: ${this.state.country}\ngender: ${this.state.gender}`
     );
     alert('Success!');
   };
@@ -77,7 +78,7 @@ export default class App extends React.Component {
             />
           </div>
           <div className="form-group mb-3">
-            <label htmlFor="countrySelect">Choose country</label>
+            <label htmlFor="countrySelect">Country</label>
             <select
               className="form-select"
               id="countrySelect"
@@ -88,12 +89,44 @@ export default class App extends React.Component {
               {this.getOptionItems(countries)}
             </select>
           </div>
-
-          {/* <Verificators
+          <fieldset>
+            <div>Gender</div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                id="flexRadioDefault1"
+                name="gender"
+                value="male"
+                checked={this.state.gender === 'male'}
+                onChange={this.onChangeInput}
+              />
+              <label className="form-check-label" htmlFor="flexRadioDefault1">
+                male
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                id="flexRadioDefault2"
+                name="gender"
+                value="female"
+                checked={this.state.gender === 'female'}
+                onChange={this.onChangeInput}
+              />
+              <label className="form-check-label" htmlFor="flexRadioDefault2">
+                female
+              </label>
+            </div>
+          </fieldset>
+          {/* 
+          <Verificators
             username={this.state.username}
             password={this.state.password}
             repeatPassword={this.state.repeatPassword}
-          /> */}
+          /> 
+          */}
 
           <button
             type="submit"
