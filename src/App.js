@@ -1,5 +1,6 @@
 import React from 'react';
 // import Verificators from './Verificators.js';
+import GenderRadio from './GenderRadio.js';
 import countries from './data/countries.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
@@ -13,6 +14,7 @@ export default class App extends React.Component {
       repeatPassword: '',
       country: '',
       gender: 'male',
+      agree: false,
     };
   }
 
@@ -25,9 +27,16 @@ export default class App extends React.Component {
   };
 
   onChangeInput = (event) => {
-    console.log(`${event.target.name}: ${event.target.value}`);
+    // console.log(`${event.target.name}: ${event.target.value}`);
     this.setState({
       [event.target.name]: event.target.value,
+    });
+  };
+
+  onChangeCheckbox = (event) => {
+    console.log(`${event.target.name}: ${event.target.checked}`);
+    this.setState({
+      [event.target.name]: event.target.checked,
     });
   };
 
@@ -89,37 +98,25 @@ export default class App extends React.Component {
               {this.getOptionItems(countries)}
             </select>
           </div>
-          <fieldset>
-            <div>Gender</div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                id="flexRadioDefault1"
-                name="gender"
-                value="male"
-                checked={this.state.gender === 'male'}
-                onChange={this.onChangeInput}
-              />
-              <label className="form-check-label" htmlFor="flexRadioDefault1">
-                male
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                id="flexRadioDefault2"
-                name="gender"
-                value="female"
-                checked={this.state.gender === 'female'}
-                onChange={this.onChangeInput}
-              />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
-                female
-              </label>
-            </div>
-          </fieldset>
+          <GenderRadio
+            isMale={this.state.gender === 'male'}
+            isFemale={this.state.gender === 'female'}
+            onChangeInput={this.onChangeInput}
+          />
+          <div className="form-check mb-3 mt-3">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="agree"
+              name="agree"
+              value={this.state.agree}
+              onChange={this.onChangeCheckbox}
+              checked={this.state.agree}
+            />
+            <label className="form-check-label" htmlFor="agree">
+              Agree
+            </label>
+          </div>
           {/* 
           <Verificators
             username={this.state.username}
