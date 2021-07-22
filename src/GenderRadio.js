@@ -1,7 +1,7 @@
 const GenderRadio = (props) => {
   const { isMale, isFemale, onChangeInput } = props;
   return (
-    <fieldset>
+    <fieldset className="mb-3">
       <div>Gender</div>
       <div className="form-check">
         <input
