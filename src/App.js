@@ -4,8 +4,6 @@ import countries from './data/countries.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
-// import Traning from './Traning.js';
-
 export default class App extends React.Component {
   constructor() {
     super();
@@ -13,10 +11,11 @@ export default class App extends React.Component {
       username: '',
       password: '',
       repeatPassword: '',
-      country: '',
+      country: '1',
       gender: 'male',
+      avatar: 'nothing',
+      age: 0,
       agree: false,
-      avatar: '',
       errors: {},
     };
   }
@@ -27,20 +26,23 @@ export default class App extends React.Component {
     const errors = {};
 
     if (this.state.username.length === 0) {
-      errors.username = 'Required';
+      errors.username = '*Required';
     }
     if (this.state.password.length < 5) {
-      errors.password = 'Must be more than 5 characters';
+      errors.password = '*Must be more than 5 characters';
     }
     if (
       this.state.repeatPassword !== this.state.password ||
       this.state.repeatPassword.length < 5 ||
       this.state.repeatPassword.length === 0
     ) {
-      errors.repeatPassword = 'Must be equal to password';
+      errors.repeatPassword = '*Must be equal to password';
     }
     if (!this.state.agree) {
-      errors.agree = 'Required';
+      errors.agree = '*Required';
+    }
+    if (this.state.age < 18) {
+      errors.age = '*Must be more than (or equal) 18';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -52,7 +54,11 @@ export default class App extends React.Component {
         errors: {},
       });
       console.log(
-        `username: ${this.state.username}\npassword: ${this.state.password}\ncountry: ${this.state.countrySelect}\ngender: ${this.state.gender}`
+        Object.keys(this.state)
+          .map((item) => {
+            return `${item}: ${this.state[item]}`;
+          })
+          .join('\n')
       );
     }
   };
@@ -65,7 +71,7 @@ export default class App extends React.Component {
   };
 
   onChangeCheckbox = (event) => {
-    console.log(`${event.target.name}: ${event.target.checked}`);
+    // console.log(`${event.target.name}: ${event.target.checked}`);
     this.setState({
       [event.target.name]: event.target.checked,
     });
@@ -89,10 +95,20 @@ export default class App extends React.Component {
     ));
   };
 
+  decrementAge = () => {
+    this.setState({
+      age: this.state.age - 1,
+    });
+  };
+
+  incrementAge = () => {
+    this.setState({
+      age: this.state.age + 1,
+    });
+  };
+
   render() {
     return (
-      // <Traning />
-
       <div className="form-container card">
         <div className="card-header p-3 h4">Registration form</div>
         <form className="form card-body ">
@@ -110,10 +126,11 @@ export default class App extends React.Component {
               {this.state.errors.username ? this.state.errors.username : null}
             </div>
           </div>
+
           <div className="form-group mb-3">
             <label>Password</label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               placeholder="Enter password"
               name="password"
@@ -124,10 +141,11 @@ export default class App extends React.Component {
               {this.state.errors.password ? this.state.errors.password : null}
             </div>
           </div>
+
           <div className="form-group mb-3">
             <label>Repeat password</label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               placeholder="Repeat password"
               name="repeatPassword"
@@ -173,6 +191,39 @@ export default class App extends React.Component {
             />
           </div>
 
+          <div className="form-group mb-3">
+            <div>
+              <label>Age</label>
+            </div>
+            <div className="btn-group">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={this.decrementAge}
+              >
+                -
+              </button>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter age"
+                name="age"
+                value={this.state.age}
+                onChange={this.onChangeInput}
+              />
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={this.incrementAge}
+              >
+                +
+              </button>
+            </div>
+            <div className="invalid-feedback">
+              {this.state.errors.age ? this.state.errors.age : null}
+            </div>
+          </div>
+
           <div className="form-check mb-3">
             <input
               className="form-check-input"
@@ -184,7 +235,8 @@ export default class App extends React.Component {
               checked={this.state.agree}
             />
             <label className="form-check-label" htmlFor="agree">
-              Agree
+              I agree with{' '}
+              <span style={{ color: '#0d6efd' }}>Privacy Policy</span>
             </label>
             <div className="invalid-feedback">
               {this.state.errors.agree ? this.state.errors.agree : null}

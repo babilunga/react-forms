@@ -11,7 +11,3 @@ span:hover {
 .invalid-feedback {
   display: block;
 }
-
-.block {
-  display: inline;
-}
