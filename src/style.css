@@ -5,6 +5,13 @@
   transform: translate(-50%, -50%);
   width: 460px;
 }
+span:hover {
+  cursor: pointer;
+}
 .invalid-feedback {
   display: block;
+}
+
+.block {
+  display: inline;
 }

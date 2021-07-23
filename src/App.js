@@ -4,6 +4,8 @@ import countries from './data/countries.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
+// import Traning from './Traning.js';
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -24,8 +26,8 @@ export default class App extends React.Component {
 
     const errors = {};
 
-    if (this.state.username.length < 3) {
-      errors.username = 'Must be more than 3 characters';
+    if (this.state.username.length === 0) {
+      errors.username = 'Required';
     }
     if (this.state.password.length < 5) {
       errors.password = 'Must be more than 5 characters';
@@ -37,6 +39,9 @@ export default class App extends React.Component {
     ) {
       errors.repeatPassword = 'Must be equal to password';
     }
+    if (!this.state.agree) {
+      errors.agree = 'Required';
+    }
 
     if (Object.keys(errors).length > 0) {
       this.setState({
@@ -47,7 +52,7 @@ export default class App extends React.Component {
         errors: {},
       });
       console.log(
-        `Submited: \nUsername: ${this.state.username}\nPassword: ${this.state.password}`
+        `username: ${this.state.username}\npassword: ${this.state.password}\ncountry: ${this.state.countrySelect}\ngender: ${this.state.gender}`
       );
     }
   };
@@ -86,10 +91,12 @@ export default class App extends React.Component {
 
   render() {
     return (
+      // <Traning />
+
       <div className="form-container card">
         <div className="card-header p-3 h4">Registration form</div>
         <form className="form card-body ">
-          <div className="form-group mb-2">
+          <div className="form-group mb-3">
             <label>Username</label>
             <input
               type="text"
@@ -103,7 +110,7 @@ export default class App extends React.Component {
               {this.state.errors.username ? this.state.errors.username : null}
             </div>
           </div>
-          <div className="form-group mb-2">
+          <div className="form-group mb-3">
             <label>Password</label>
             <input
               type="password"
@@ -117,7 +124,7 @@ export default class App extends React.Component {
               {this.state.errors.password ? this.state.errors.password : null}
             </div>
           </div>
-          <div className="form-group mb-2">
+          <div className="form-group mb-3">
             <label>Repeat password</label>
             <input
               type="password"
@@ -134,9 +141,7 @@ export default class App extends React.Component {
             </div>
           </div>
 
-          <hr />
-
-          <div className="form-group mb-2">
+          <div className="form-group mb-3">
             <label htmlFor="countrySelect">Country</label>
             <select
               className="form-select"
@@ -155,9 +160,7 @@ export default class App extends React.Component {
             onChangeInput={this.onChangeInput}
           />
 
-          <hr />
-
-          <div className="form-group mb-2">
+          <div className="form-group mb-3">
             <label htmlFor="formFile" className="form-label">
               Upload your avatar
             </label>
@@ -170,9 +173,7 @@ export default class App extends React.Component {
             />
           </div>
 
-          <hr />
-
-          <div className="form-check mb-2">
+          <div className="form-check mb-3">
             <input
               className="form-check-input"
               type="checkbox"
@@ -185,6 +186,9 @@ export default class App extends React.Component {
             <label className="form-check-label" htmlFor="agree">
               Agree
             </label>
+            <div className="invalid-feedback">
+              {this.state.errors.agree ? this.state.errors.agree : null}
+            </div>
           </div>
 
           <button
